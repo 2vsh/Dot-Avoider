@@ -81,9 +81,10 @@ while running:
     countdown_time = countdown_duration - (current_time - countdown_start_time) // 1000
 
     if countdown_time > 0:
-        # Display countdown timer
+        # Display countdown timer above the player's starting location
         countdown_text = font.render(f"Countdown: {countdown_time}", True, BLACK)
-        screen.blit(countdown_text, (width // 2 - countdown_text.get_width() // 2, height // 2 - countdown_text.get_height() // 2))
+        countdown_pos = (width // 2 - countdown_text.get_width() // 2, 50)  # Adjust the vertical position as needed
+        screen.blit(countdown_text, countdown_pos)
 
         # Display enemy dots in light blue color during countdown
         for i in range(len(enemy_pos)):
@@ -122,8 +123,8 @@ while running:
                 ):
                     points += elapsed_time  # Bonus points for being very close to a red dot
 
-        # Update level every 20 seconds
-        if current_time - last_level_time >= 20000:  # 20 seconds
+        # Update level every 10 seconds
+        if current_time - last_level_time >= 10000:  # 10 seconds
             level += 1
             last_level_time = current_time
 
