@@ -28,7 +28,7 @@ player_speed = 5
 enemy_size = 10
 enemy_pos = []
 enemy_vel = []
-num_enemies = 5  # Start with 5 enemy dots
+num_enemies = 10  # Start with 10 enemy dots
 
 # Set the minimum distance between the player and spawned dots
 min_spawn_distance = 100
@@ -336,6 +336,6 @@ while running:
                     selected_option = (selected_option + 1) % 2
 
 # Wait for a moment before closing the window
-pygame.time.delay(1000)  # Delay for 1 second (1000 milliseconds)
+pygame.time.delay(500)  # Delay for .5 seconds (500 milliseconds)
 
 pygame.quit()
