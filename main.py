@@ -39,6 +39,21 @@ font = pygame.font.Font(None, 36)
 # Set up the Discord webhook URL
 webhook_url = "[Hook Here]"
 
+def spawn_initial_enemies():
+    enemy_pos.clear()
+    enemy_vel.clear()
+    for _ in range(num_enemies):
+        while True:
+            x = random.randint(0, width - enemy_size)
+            y = random.randint(0, height - enemy_size)
+            if (
+                abs(x - player_pos[0]) >= min_spawn_distance
+                and abs(y - player_pos[1]) >= min_spawn_distance
+            ):
+                enemy_pos.append([x, y])
+                enemy_vel.append([random.randint(1, 3), random.randint(1, 3)])
+                break
+
 # Game loop
 running = True
 clock = pygame.time.Clock()
@@ -82,19 +97,6 @@ while start_screen:
         if event.type == pygame.KEYDOWN:
             start_screen = False
 
-# Spawn initial enemy dots
-for _ in range(num_enemies):
-    while True:
-        x = random.randint(0, width - enemy_size)
-        y = random.randint(0, height - enemy_size)
-        if (
-            abs(x - player_pos[0]) >= min_spawn_distance
-            and abs(y - player_pos[1]) >= min_spawn_distance
-        ):
-            enemy_pos.append([x, y])
-            enemy_vel.append([random.randint(1, 3), random.randint(1, 3)])  # Reduced enemy speed
-            break
-
 while running:
     # Set the start time and last point time after the start screen
     start_time = pygame.time.get_ticks()
@@ -103,6 +105,10 @@ while running:
     countdown_start_time = start_time
 
     game_over = False
+
+    # Spawn initial enemy dots
+    spawn_initial_enemies()
+
     while not game_over:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -315,6 +321,11 @@ while running:
                         enemy_pos = []
                         enemy_vel = []
                         player_pos = [width // 2, height // 2]
+                        enemy_speed_factor = 1.0  # Reset enemy speed factor
+
+                        # Spawn initial enemy dots
+                        spawn_initial_enemies()
+
                         game_over = True
                     else:
                         game_over = True
